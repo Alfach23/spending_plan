@@ -1,8 +1,72 @@
-﻿<Window x:Class="MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="MainWindow" Height="350" Width="525">
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Планирование расходов" Height="450" Width="450" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="151*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180"/>
+                <ColumnDefinition Width="180"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Выберите категорию" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Calendar Grid.Row="0" Grid.RowSpan="5" Grid.Column="1" HorizontalAlignment="Right" Name="calen" />
+            <ComboBox Grid.Row="1" Grid.Column="0" Name="cbCtgrs">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=NameCtgrs}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Button   Grid.Row="3"  Grid.Column="0" Height="30" Width="110" HorizontalAlignment="Center" Content="Поиск" Click="SEARCH_Click" />
+
+            <!--<Button Content="Справочники" Click="Dictionarys_Click" Grid.Row="0" Grid.Column="4" Width="120" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <Button   Grid.Row="5"  Grid.Column="2" Width="250" HorizontalAlignment="Center" Content="Добавить" Click="ADD_Click" Margin="0,16,0,-16"/>
+            <Button   Grid.Row="2"  Grid.Column="3" Content="Поиск" HorizontalAlignment="Center" Width="250" Click="SEARCH_Click"/>
+            <Button   Grid.Row="4"  Grid.Column="2" HorizontalAlignment="Left" Width="250" Content="Сбросить фильтры" Click="Reset_Filters"/>-->
+        </Grid>
+
+        <DataGrid Grid.Row="1" Name="DataCenter" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="11,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Binding="{Binding Path=IdSpending}"/>
+                <DataGridTextColumn Header="Наименование расхода" Binding="{Binding Path=NameSpen}"/>
+                <DataGridTextColumn Header="Категория расхода" Binding="{Binding Path=MCtgrs.NameCtgrs}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Path=SumSpen}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Path=IdDataSpen, StringFormat=dd.MM.yyyy}"/>
+                <DataGridTemplateColumn Header="Действия">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="1" Content="Удалить" Tag="{Binding Path=IdSpending}" Click="Delete_Click"/>
+                                <Button Grid.Column="0" Content="Изменить" Tag="{Binding Path=IdSpending}"  Click="Update_Click"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button   Grid.Row="2" Height="30" Width="100" HorizontalAlignment="Right" Content="Добавить расход" Click="AddWindow_Click" Grid.Column="1" />
     </Grid>
 </Window>

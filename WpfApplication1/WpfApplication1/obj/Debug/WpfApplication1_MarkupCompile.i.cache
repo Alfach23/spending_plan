@@ -2,19 +2,19 @@
 
 
 winexe
-VB
-.vb
-C:\Users\Вайцеховские\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\
+C#
+.cs
+C:\Users\Вайцеховские\Documents\GitHub\spending_plan\WpfApplication1\WpfApplication1\obj\Debug\
 WpfApplication1
 none
 false
+DEBUG;TRACE
+C:\Users\Вайцеховские\Documents\GitHub\spending_plan\WpfApplication1\WpfApplication1\App.xaml
+2-2127480708
 
-C:\Users\Вайцеховские\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\Application.xaml
-11151548125
-
-7681474848
-10-2017953140
-MainWindow.xaml;
+71323943327
+13-630536762
+ADDSpending.xaml;MainWindow.xaml;
 
 False
 
