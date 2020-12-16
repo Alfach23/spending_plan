@@ -13,6 +13,7 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
         public SQLiteConnection sqlCon = new SQLiteConnection("Data Source=DBspending.db; Version=3");
+        public string iz;
         public MainWindow()
         {
             InitializeComponent();
@@ -60,6 +61,11 @@ namespace WpfApplication1
                 MessageBox.Show(exp.Message);
             }
             //загрузка данных по критериям
+            if (txtNameS.Text!="")
+            {
+                string nameSp = Convert.ToString(txtNameS.Text);
+                sqlDB += string.Format("AND t_spending.NameSpen='{0}'",nameSp);
+            }
             if (cbCtgrs.SelectedIndex > 0)
             {
                 int cbox1 = ((MyCategories)cbCtgrs.SelectedItem).IdCtgrs;
@@ -84,22 +90,22 @@ namespace WpfApplication1
             for (int i = 0; i < datMain.Rows.Count; i++)
             {
                 YourSpend temp = new YourSpend();
-
                 temp.IdSpending = Convert.ToInt32(datMain.Rows[i]["IdSpending"]);
                 temp.NameSpen = datMain.Rows[i]["NameSpen"].ToString();
                 temp.SumSpen = Convert.ToInt32(datMain.Rows[i]["SumSpen"]);
-                temp.IdDataSpen = Convert.ToDateTime(datMain.Rows[i]["DateSpen"]);
+                temp.DateSpen = Convert.ToDateTime(datMain.Rows[i]["DateSpen"]);
                 temp.MCtgrs = new MyCategories();
                 temp.MCtgrs.IdCtgrs = Convert.ToInt32(datMain.Rows[i]["IdCtgrs"]);
                 temp.MCtgrs.NameCtgrs = datMain.Rows[i]["NameCtgrs"].ToString();
-
                 listSpends.Add(temp);
             }
+            //заполняем DataGrid данными
             DataCenter.ItemsSource = null;
             DataCenter.ItemsSource = listSpends;
         }
         private void AddWindow_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             ADDSpending form = new ADDSpending(this);
             form.ShowDialog();
             SEARCH_Click(null, null);
@@ -121,7 +127,26 @@ namespace WpfApplication1
         }
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-           
+            iz = ((Button)sender).Tag.ToString();
+            for (int i = 0; i < DataCenter.Items.Count; i++)
+            {
+                var uuu = (YourSpend)DataCenter.Items[i];
+                if (uuu.IdSpending.ToString() == iz)
+                {
+                    ADDSpending form = new ADDSpending(this, uuu);
+                    form.ShowDialog();
+                    SEARCH_Click(null, null);
+                    break;
+                }
+            }
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            txtNameS.Text = "";
+            cbCtgrs.SelectedIndex = -1;
+            calen.SelectedDate = null;
+            SEARCH_Click(null, null);
         }
     }
 
@@ -136,7 +161,7 @@ namespace WpfApplication1
         public int IdSpending { get; set; }
         public string NameSpen { get; set; }
         public MyCategories MCtgrs { get; set; }
-        public DateTime IdDataSpen { get; set; }
+        public DateTime DateSpen { get; set; }
         public int SumSpen { get; set; }
         
     }
