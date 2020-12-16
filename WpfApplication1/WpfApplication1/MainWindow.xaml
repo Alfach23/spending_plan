@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Планирование расходов" Height="450" Width="557" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Планирование расходов" Height="450" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="180"/>
@@ -36,12 +36,12 @@
             <Button   Grid.Row="3"  Grid.Column="1" Height="30" Width="100" HorizontalAlignment="Center" Content="Сброс фильтров" Click="Reset_Click" />
         </Grid>
 
-        <DataGrid Grid.Row="1" Name="DataCenter" Width="527" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Center">
+        <DataGrid Grid.Row="1" Name="DataCenter" Width="590" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Center">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№" Binding="{Binding Path=IdSpending}"/>
                 <DataGridTextColumn Header="Наименование расхода" Binding="{Binding Path=NameSpen}"/>
                 <DataGridTextColumn Header="Категория расхода" Binding="{Binding Path=MCtgrs.NameCtgrs}"/>
-                <DataGridTextColumn Header="Сумма" Binding="{Binding Path=SumSpen}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Path=strSumSpen}"/>
                 <DataGridTextColumn Header="Дата" Binding="{Binding Path=DateSpen, StringFormat=dd.MM.yyyy}"/>
                 <DataGridTemplateColumn Header="Действия">
                     <DataGridTemplateColumn.CellTemplate>
@@ -59,6 +59,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button   Grid.Row="2" Height="30" Width="100" HorizontalAlignment="Center" Content="Добавить расход" Click="AddWindow_Click" Grid.Column="1" />
+        <Button   Grid.Row="2" Height="30" Width="100" HorizontalAlignment="Left" Content="Добавить расход" Click="AddWindow_Click" Grid.Column="1" />
+        <TextBlock Grid.Row="2" Text="Количество записей " HorizontalAlignment="Right" VerticalAlignment="Center" Name="txtCount"/>
+        <TextBlock Grid.Row="2" Text="Общая сумма" HorizontalAlignment="Center" VerticalAlignment="Center" Name="txtSum"/>
     </Grid>
 </Window>

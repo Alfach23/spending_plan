@@ -46,6 +46,12 @@ namespace WpfApplication1
         }
         private void SEARCH_Click(object sender, RoutedEventArgs e)
         {
+            int rubS;
+            int allRub=0;
+            int rub;
+            int kop;
+            txtCount.Text = "";
+            txtSum.Text = "";
             string sqlDB = @"SELECT t_spending.IdSpending, t_spending.Id_ctgrsS, t_spending.NameSpen, t_spending.DateSpen, t_spending.SumSpen, t_categories.IdCtgrs, t_categories.NameCtgrs 
                             FROM    t_spending, t_categories 
                             WHERE   t_spending.Id_ctgrsS = t_categories.IdCtgrs ";
@@ -92,6 +98,13 @@ namespace WpfApplication1
                 YourSpend temp = new YourSpend();
                 temp.IdSpending = Convert.ToInt32(datMain.Rows[i]["IdSpending"]);
                 temp.NameSpen = datMain.Rows[i]["NameSpen"].ToString();
+                //отображение суммы с точностью до копейки
+                rubS = Convert.ToInt32(datMain.Rows[i]["SumSpen"]);
+                allRub = allRub + rubS;
+                rub = rubS / 100;
+                kop = rubS - rub * 100;
+                temp.strSumSpen = Convert.ToString(rub+" руб. "+ kop + " коп.");
+                //
                 temp.SumSpen = Convert.ToInt32(datMain.Rows[i]["SumSpen"]);
                 temp.DateSpen = Convert.ToDateTime(datMain.Rows[i]["DateSpen"]);
                 temp.MCtgrs = new MyCategories();
@@ -102,6 +115,11 @@ namespace WpfApplication1
             //заполняем DataGrid данными
             DataCenter.ItemsSource = null;
             DataCenter.ItemsSource = listSpends;
+            //Итоговые значения (количество строк и 
+            rub = allRub / 100;
+            kop = allRub - rub * 100;
+            txtCount.Text = Convert.ToString("Количество записей: " +listSpends.Count);
+            txtSum.Text = Convert.ToString("Итого расходов: "+ rub + " руб. " + kop + " коп.");
         }
         private void AddWindow_Click(object sender, RoutedEventArgs e)
         {
@@ -163,6 +181,7 @@ namespace WpfApplication1
         public MyCategories MCtgrs { get; set; }
         public DateTime DateSpen { get; set; }
         public int SumSpen { get; set; }
-        
+        public string strSumSpen { get; set; }
+
     }
 }
