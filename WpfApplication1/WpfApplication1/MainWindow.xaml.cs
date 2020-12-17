@@ -124,7 +124,7 @@ namespace WpfApplication1
         private void AddWindow_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            ADDSpending form = new ADDSpending(this);
+            Window form = new ADDSpending(this);
             form.ShowDialog();
             SEARCH_Click(null, null);
         }
@@ -151,7 +151,8 @@ namespace WpfApplication1
                 var uuu = (YourSpend)DataCenter.Items[i];
                 if (uuu.IdSpending.ToString() == iz)
                 {
-                    ADDSpending form = new ADDSpending(this, uuu);
+                    this.Hide();
+                    Window form = new ADDSpending(this, uuu);
                     form.ShowDialog();
                     SEARCH_Click(null, null);
                     break;
